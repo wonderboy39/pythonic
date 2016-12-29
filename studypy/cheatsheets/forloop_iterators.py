@@ -13,7 +13,7 @@ for i in range(10):
 print('')
 
 #two ways how to iterate list
-print('Just iterate list in two ways...')
+print('Just iterate list in three ways...')
 print('1) Using for ~ in list')
 fruits = ['Apple', 'Banana', 'Coconut', 'D...?']
 for fruit in fruits:
@@ -23,6 +23,11 @@ print('')
 print('2) Using for i in range(...)')
 for i in range(len(fruits)):
     print(fruits[i])
+print('')
+
+print('3) Using enumerate')
+for i, fruit in enumerate(fruits):
+    print(fruit + ', ' + fruits[i])
 print('')
 
 # better way 11
@@ -45,3 +50,17 @@ for i in range(len(len_names)):
         longest_name = names[i]
         max_size=temp_size
 print(longest_name)
+print('')
+
+# ex) 위의 문제를 enumerate를 써서 pythonic하게 고쳐보기
+# 위에 있는 거 정말로 안보고 쳤다... 진짜로... 왜? 어뷰징하지 않기 위해!!
+print('Get max_length of string, using comprehension, enumerate(list)')
+print('Getting more pythonic...')
+maximum_name = ''
+max_length=0
+for i, name in enumerate(len_names):
+    count = len_names[i]
+    if(count>max_length):
+        max_length = count
+        maximum_name = names[i]
+print('result : ' + maximum_name + '\n')
