@@ -1,7 +1,7 @@
 #-*-coding:utf-8-*-
 # created : 2016.12.28. pm 11:29
 # author : Soon Gu Jung
-# purpose : effective python, test codes...
+# purpose : introducing python, test codes...
 
 # python에서 함수(function)의 기본적인 형태
 # 함수(function) :
@@ -177,3 +177,136 @@ print('')
 print(echo.__doc__)
 # __doc__ 는 function 내부의 변수다.
 print('')
+
+# 함수 - 파이썬의 일등 시민
+# : 함수는 변수에 할당할 수 있다.
+# : 다른 함수에서 인자로 사용할 수 있다.
+# : 다른 함수에서 함수를 반환할 수 있다.
+# : ()는 파이썬에서 함수를 호출한다는 의미다.
+# : ()가 없으면 함수를 다른 모든 객체와 마찬가지로 간주한다.
+# : 함수에 ()없이 함수명만 인자로 전달하면 다른 모든 인자와 마찬가지로 이 함수를 데이터처럼 사용한다.
+
+fruits = ['Avocado', 'Banana', 'Carrot']
+def print_fruits():
+    print(fruits)
+
+def run_func(func):
+    func()
+    print('type(func) : ',type(func))
+
+run_func(print_fruits)
+
+# 함수와 함께 다른 인자들을 취하는 함수의 정의, 호출
+def add_args(*args):
+    return sum(args)
+def call_func_with_args(func, arg1, arg2):
+    print('sum of the func add_args : ', func(arg1, arg2) )
+call_func_with_args(add_args, 3,9)
+print('')
+# 함수를 리스트,튜플,셋,딕셔너리의 요소로 사용할 수 있다.
+# 함수는 불변이기 때문에 딕셔너리의 키로도 사용할 수 있다.
+
+## 내부함수
+# - 함수안에 또 다른 함수를 정의할 수 있다
+# - 내부함수는 루프나 코드 중복을 피하기 위해 또 다른 함수내에
+#   어떤 복잡한 작업을 한번 이상 수행할때 유용하게 사용된다
+
+# ex) 그냥... 책에 쓰여있는 직관적인 예제..
+def outer(a,b):
+    def inner(c,d):
+        return c+d
+    return inner(a,b)
+outer(3,9)
+print('')
+
+# ex) 그냥... 책에 쓰여있는 직관적인 예제..
+def knights(saying):
+    def inner(quote):
+        return "We are the knights who say : '%s'" %quote
+    return inner(saying)
+
+
+# 테스트 !!!) bubble_sort를 inner함수에서 수행하는 프로그램 작성
+numbers = [6,5,4,3,2,1]
+copied_numbers = list(numbers)
+print copied_numbers
+print('')
+
+def outer(arr):
+    def inner(arr2): # bubble sort in the inner function
+        i=0
+        while(i<len(arr2)):
+            j=i+1
+            while(j<len(arr2)):
+                if(arr2[i]>arr2[j]):
+                    temp=arr2[i]
+                    arr2[i]=arr2[j]
+                    arr2[j]=temp
+                j+=1
+            i+=1
+    inner(arr)
+
+outer(copied_numbers)
+print('sorted copied_numbers : ', copied_numbers)
+
+# 클로져
+# 내부함수는 클로져(closure)처럼 동작할 수 있다.
+# 클로저 :
+#   특별한 함수다.
+#   다른 함수에 의해 동적으로 생성된다.
+#   outer함수로부터 생성된 변수값을 변경,저장할 수 있는 함수다.
+#   outer함수로부터 생성된 변수값등을 변경,저장하는 내부 함수객체를 return해서 사용하기도 한다.
+
+def knight2(saying):
+    def inner2():
+        return "We are the knights who say : '%s'" %saying
+    return inner2
+
+a = knight2('Darth Vader')
+b = knight2('Yoda')
+
+print(type(a))
+print(type(b))
+
+print(a)
+print(b)
+print(a())
+print(b())
+
+# 익명함수 : lambda()
+# 파이썬의 람다(lambda function)는 단일문으로 표현되는 익명함수(anonymous function)이다.
+# 람다식의 사용법)
+#   lambda [매개인자1, 매개인자2, ...] : [계산식, 표현식, 처리문... --- 리턴값]
+# ex)
+#   lambda x,y : x+y
+# 많은 경우 명확하게 함수를 정의해서 사용하는 것이 명확하다는 장점이 있다
+# 람다를 사용하는 것은 많은 작은함수를 정의하고,
+#    이들을 호출해서 얻은 모든 결과값을 저장해야 하는 경우에 유용하다.
+
+# 1) 대문자로 만들기
+def do_something(arg_list, func):
+    for fruit in arg_list:
+        print(func(fruit))
+
+def capitalize(arg):
+    return arg.capitalize() + '!'
+
+print("1) Not using lambda")
+do_something(fruits, capitalize)
+print('')
+
+print("2) Using lambda")
+do_something(fruits, lambda word : word.capitalize() + '!')
+print('')
+
+# 2) get sum of numbers_to_sum , using lambda (annonymous function)
+numbers_to_sum = [1,2,3,4,5,6,7,8,9,10]
+def sum_numbers(arr_numbers, func):
+    sum=0
+    for number in arr_numbers:
+        sum=func(number,sum)
+    print('sum : ', sum)
+
+sum_numbers(numbers_to_sum, lambda x,y: y+x)
+
+# 제너레이터
