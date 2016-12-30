@@ -306,7 +306,8 @@ def sum_numbers(arr_numbers, func):
     for number in arr_numbers:
         sum=func(number,sum)
     print('sum : ', sum)
-
 sum_numbers(numbers_to_sum, lambda x,y: y+x)
 
 # 제너레이터
+
+
