@@ -25,7 +25,6 @@ while i<len(arr):
             # min이 초기화되지 않고 이전에 찾아놓은 index를 그대로 사용하게 되는 경우도 있으므로
             # 바로 전 단계의 while문에서 min을 i로 바꿔줘야 한다.
             # ( 반복문의 each step마다 정렬되지 않은 나머지 배열의 첫요소를 가리켜야 하므로 )
-
         j=j+1
     temp = arr[min]
     arr[min] = arr[i]
