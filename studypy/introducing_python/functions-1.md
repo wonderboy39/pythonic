@@ -180,21 +180,22 @@ ex) \*\*을 이용해 keyword arguments 모으기
 매개변수의 이름은 관용적으로 kwargs를 이용한다.  
 나중에 자세히 다뤄볼 것  
 ```python
-def print_kwargs(**kwargs):
+def print_kwargs(\*\*kwargs):
     print('Keyword arguments : ', kwargs)
-
 ```
+
+### docstring
+* '가독성은 중요하다(readability counts).'는 파이썬의 철학이다.  
+* docstring은 함수의 몸체 시작부분에 문자열을 포함시켜 함수의 정의에 documentation을 붙이는 것이다.  
+* docstring은 길게 작성할 수 있으며, 서식(formatting)을 추가할 수도 있다.  
+* 작성한 docstring을 보려면 help(함수명)을 통해 확인가능하다.  
+* docstring 을 서식 없이 보고자 할 때print(echo.\_\_doc\_\_)로 출력 가능하다.  
+
+
 
 
 
 ```python
-# docstring
-# '가독성은 중요하다(readibility counts).'는 파이썬의 철학이다.
-# 함수의 몸체 시작 부분에 문자열을 포함시켜 함수정의에 documentation을 붙이는 것이 docstring이다.
-# docstring은 길게 작성할수 있으며 서식(formatting)을 추가할 수도 있다.
-# 작성한 docstring을 보고자 할때 help(함수명)을 통해 확인가능하다.
-# docstring을 서식 없이 보고자 할때는 print(echo.__doc__) 로 출력가능하다.
-
 def echo(anything):
     'echo returns its input arguments'
     return anything
