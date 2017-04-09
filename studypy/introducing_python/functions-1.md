@@ -1,5 +1,5 @@
 
-#python의 함수
+# python의 함수
 ## python에서 함수(function)의 기본적인 형태
 ### 함수(function)
  * 코드의 재사용을 위한 존재
@@ -83,22 +83,26 @@ menu(entree='beef', dessert='chicken', wine='bordeaux')
 menu('frontenac', dessert='salad', entree='fish and chips')
 ```
 ### 디폴트 매개변수
+#### 주의
+ * 디폴트 매개변수의 값은 함수가 실행될 때 계산되지 않는다. 다만, 함수를 정의할 때 계산된다.
+ * 리스트 / 딕셔너리 등 변경가능한 데이터 타입을 디폴트 매개변수로 사용할 경우 예상치 못한 값이 대입될 수 있다.(파이썬을 처음 시작하거나, 자주하는 실수)
 
-
+ex) 디폴트 매개변수의 사용 예
 ```python
-# 기본 매개변수값 지정 (c++에서 볼수 있는 디폴트 매개변수...)
-# 주의)
-#   기본인자값은 함수가 실행될때 계산되지 않고 함수를 정의할 때 계산된다.
-#   리스트 or 딕셔너리 등의 변경가능한 데이터타입을 기본인자로 사용할 때 예상치 못한 값이 들어갈 수 있다.
-#   (파이썬을 처음 시작하거나 혹은 시간이 지난 프로그래머들이 자주하는 실수)
-def menu(wine,entree, dessert='pudding'):
-    return{'wine': wine, 'entree': entree, 'dessert':dessert}
-
+def menu (wine, entree, dessert='pudding'):
+	print('default parameters')
+	return ('wine': wine, 'entree': entree, 'dessert':dessert)
 print(menu('chardonnay', 'beef'))
 print('')
+# 출력결과)
+# default parameters
+# {'dessert': 'pudding', 'entree': 'beef', 'wine': 'chardonnay'}
+```
 
-# ex) 디폴트 매개변수로 인한 버그가 발생하는 예
+ex) 디폴트 매개변수로 인한 버그의 예
+```python
 def bug(input, fruits=[]):
+    print('some bugs due to abused default parameters')
     fruits.append(input)
     print(fruits)
 
@@ -107,39 +111,45 @@ print('')
 
 bug('Volcano')
 print('')
-# bug()를 실행할 때마다 비어있는 fruits 리스트에 input인자를 추가한 후
-# fruits리스트를 출력하는 것이 의도였으나 예상과는 다르게
-# 두번째로 호출하면 fruits리스트에는 이전 호출에서 생긴 한 항목이 들어있다.
+# 출력결과
+# some bugs due to abused default parameters
+# ['Avocado']
+#
+# some bugs due to abused default parameters
+# ['Avocado', 'Volcano']
+```
+bug()를 실행할때마다 비어있는 fruits리스트에 input인자를 추가한 후 fruits리스트를 출력하는 것이 의도였으나 예상과는 다르게 두번째로 호출할 때 fruits리스트에는 이전 호출에서 생긴 한 항목이 들어있다.  
+이와 같은 현상을 해결하고자 할 때 아래의 두가지 방식으로 해결이 가능하다.  
+> * 전달되지 않을 매개인자에 대해 미리 디폴트 매개인자를 지정하지 않고 함수내부에서 지역변수로 선언한다.  
+> * 매개변수에 직접 다른 값을 넣어서 디폴트값을 초기화하여 해결할 수도 있다.
 
-# 이와 같은 현상을 해결하고자 할때 아래의 두가지 방식으로 해결이 가능하다
-# 1) 전달되지 않을 매개인자에 대해 미리 디폴트 매개변수로 지정하지 않고 함수 내부에서 지역변수로 선언한다
-# 2) 매개변수에 직접다른 값을 넣어서 디폴트값을 지정해 초기화하여 해결할 수도 있다.
-
-# 1)
+ex) 해결방법 (1)
+```python
 def works(fruit):
-    fruits = []
+	fruits=[]
     fruits.append(fruit)
     print(fruits)
-
-# 2)
+```
+ex) 해결방법 (2)
+```python
 def works(fruit, fruits=None):
-    if fruits is None:
-        fruits = []
+	if fruits is None:
+    	fruits = []
     fruits.append(fruit)
     print(fruits)
+```
+### 가변인자 (\*, \*\*)
+c, c++에서 사용하는 포인터키워드와는 다른 개념이다.  
+* \* : 위치인자 모으기, 함수 내부에서 위치인자들을 튜플로 묶어서 받는다.  
+* \*\* : 키워드인자 모으기, 함수 내부에서 키워드 인자를 딕셔너리로 묶어서 받는다.  
+* 함수의 가장 마지막에 \*, \**을 지정해서 미리 정의된 필요한 매개변수들 외에 다른 인자들의 전달을 튜플, 또는 딕셔너리로 전달받을 수 있다.
 
-# 가변인자 ( *, ** )
-# c,c++의 포인터와는 다른 개념
-# * : 위치 인자 모으기, 함수는 위치인자들을 튜플로 묶어서 받는다
-# ** : 키워드 인자 모으기, 함수는 키워드 인자를 덱셔너리로 묶을때 **를 사용한다.
-
-# 함수의 가장 마지막에 *또는 **을 지정해서, 미리 정의된 필요한 매개변수들 외에
-#   다른인자들의 전달도 허용할 수 있다.
-
-# 1) * - 위치인자 모으기
-# 입력값들을 튜플로 묶는다.
-# 관용적으로 매개변수의 이름을 args를 사용한다.
-# def print_args(*kwargs)
+ex) \*을 이용한 위치인자 모으기
+```python
+'''
+입력값들을 튜플로 묶는다.
+가변인자의 이름은 관용적으로 args를 사용한다.
+'''
 def print_fruits(*fruits):
     print('print positional aruments tuple, fruits : ' , fruits )
 print_fruits(); #비어있는 튜플을 출력
@@ -152,12 +162,32 @@ def print_fruits(city, country, *fruits):
     print('Country : ', country)
     print('Fruits : ', fruits)
 
-# 2) ** - 키워드인자 모으기
-# 키워드 인자를 딕셔너리로 묶기 위해 두개의 에스터리스크(**)를 사용할 수 있다.
-# 관용적으로 매개변수의 이름을 kwargs를 사용한다.
+print_fruits('Daegu', 'Korea', 'Apple, Grape, Cherry')
+'''
+출력결과 : 
+('print positional aruments tuple, fruits : ', ())
+
+('print positional aruments tuple, fruits : ', ('Avocado', 'Banana', 'Cherry'))
+
+('City : ', 'Daegu')
+('Country : ', 'Korea')
+('Fruits : ', ('Apple, Grape, Cherry',))
+Help on function echo in module __main__:
+'''
+```
+
+ex) \*\*을 이용해 keyword arguments 모으기  
+매개변수의 이름은 관용적으로 kwargs를 이용한다.  
+나중에 자세히 다뤄볼 것  
+```python
 def print_kwargs(**kwargs):
     print('Keyword arguments : ', kwargs)
 
+```
+
+
+
+```python
 # docstring
 # '가독성은 중요하다(readibility counts).'는 파이썬의 철학이다.
 # 함수의 몸체 시작 부분에 문자열을 포함시켜 함수정의에 documentation을 붙이는 것이 docstring이다.
