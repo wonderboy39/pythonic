@@ -7,4 +7,4 @@
 5. chap06 객체, 클래스
 
 ## 샘플 프로젝트
-django책.... ㅠㅠ
+on going ) 인터넷에 있는 django tutorial들 참고해서 일정관리 웹앱 만들기  
