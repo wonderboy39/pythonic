@@ -8,22 +8,63 @@ mac에는 python2.7이 기본으로 설치 되어있다. python 2.7.x버전의 p
 ## 2) pip설치
 pip는 python에 사용되는 각종 패키지를 설치, 업그레이드,삭제하도록 하는 패키지 매니저다. pip는 django를 비롯해 python에 관련된 패키지를 쉽고 편하게 관리할 수 있도록 해준다.  
 get-pip.py를  https://pip.pypa.io/en/stable/installing/ 에서 다운받아 터미널에서 실행해서 pip를 설치할 수 있다.  
-![2](img/2.png)
-위와 같은 화면이 나타나면서 설치 될 수도 있다. 하지만 나의 경우는 아래와 같이 ‘너는 지금 pip-7.1.0을 쓰고 있어. 9.1.0이 있는데 써봐. pip install —upgrade pip 명령으로 업그레이드 할 수 있어’라는 의미의 메시지가 나왔다.  
-![3](img/3.png)
 
-따라서 아래와 같이 sudo pip install --upgrade pip을 통해 설치했다. (sudo 를 사용해야 하더라.)  
-![4](img/4.png)
 
-## 3) virtualenv설치
-virtualenv는 가상으로 python환경을 만드는 도구다. 개발환경이 설치된 PC또는 Server의 python버전이 변경되는 등을 할때마다 의존성충돌이 나는 것을 방지할 수 있도록 해주는 도구다. 작업하고 있는 PC또는 서버의 개발환경이 변하거나 python의 버전이 업그레이드 되거나 변하더라도 이전에 지정해놓은 버전위에서 계속돌아가도록 가상환경을 구성해준다.  
+##### pip이 설치되어 있는지 확인
+$ pip --version
+
+##### 처음 설치하는 경우
+$ cd [다운로드 받은 디렉터리]
+$ python get-pip.py
+(만약 python3를 사용하고 있을 경우는 $ python3 get-pip.py)  
+
+##### 이미 설치되어 있고, 오래된 버전의 pip을 사용하고 있는 경우  
+$ sudo pip install --upgrade pip
+
+## 3) python version manager 설치
+작업하고 있는 PC또는 서버의 개발환경이 변하거나 python의 버전이 업그레이드 되거나 변하더라도 이전에 지정해놓은 버전위에서 계속 돌아갈 수 있도록 가상환경을 구축하는 방법이 여러가지 있다.
+ 1. vertualenv - "Virtual Python Environment builder"
+   python3에 내장된 도구다. python3 -m venv 명령을 통해 설치되어 있는지 확인 가능하다.
+ 2. pyenv - "Simple Python Version Management"
+   pyenv로 virtualenv까지도 관리할 수 있다. pyenv는 bash를 기반으로 한 환경이다. window에서는 동작하지 않는다. (pyenv에 대한 자세한 설명은 [difference between pyenv and virtualenv](http://stackoverflow.com/questions/29950300/what-is-the-relationship-between-virtualenv-and-pyenv) 를 참고.)
+ 3. autoenv
+   pyenv와 virtualenv를 통해 의존성을 해결할 수 있다. 하지만 작업할 때마다 설정을 일일이 설정해주어야 한다. 프로젝트 디렉터리로 이동할 경우 자동으로 개발환경을 설정해주는 스크립트 방식이 있는데 이것이 autoenv다.  
+
+### pyenv설치
+##### pyenv 버전확인
+$ pyenv --version
+
+##### 존재하지 않는다면...
+$ sudo chown -R $(whoami):admin /usr/local  
+참고자료 : [Elcapitan 보안 강화때문에 brew update안되는 현상해결법](http://hssuh.tistory.com/469)  
+$ brew update  
+$ brew install pyenv  
+
+##### 현재 사용하고 있는 파이썬 버전 확인
+$ pyenv version  
+\* system (set by /Users/soon/.pyenv/version)  
+기본으로 설치되어 있는 python을 사용하고 있다고 알려준다.  
+
+##### 특정버전의 파이썬 설치
+설치 가능한 모든 버전의 파이썬 리스트 출력  
+$ pyenv install --list  
+만약 2.7.10을 설치하고 싶다면  
+$ pyenv shell 2.7.10
+$ python --version
+
+### virtualenv 설치
+======
+
+virtualenv는 가상으로 python환경을 만드는 도구다. 개발환경이 설치된 PC또는 Server의 python버전이 변경되는 등을 할때마다 의존성충돌이 나는 것을 방지할 수 있도록 해주는 도구다.  
+
+작업하고 있는 PC또는 서버의 개발환경이 변하거나 python의 버전이 업그레이드 되거나 변하더라도 이전에 지정해놓은 버전위에서 계속돌아가도록 가상환경을 구성해준다.  
 
 가상 python환경을 만드는 도구는 여러가지가 있는데 python3를 사용할 경우 python3에 내장된 python -m venv를 사용할 수도 있다. virtual env가 설치되어있는지 확인하기 위해 python -m venv명령어를 통해 확인해보면  
 ![5](img/5.png)
 
 나의 경우는 이런 화면이 나타났다. python3를 사용하고 있지 않으므로 당연히 이러한 결과가 나타난 것이다. python3가 아닌 python 2.7.x대의 python을 사용할 경우 3가지의 방식을 사용해 virtualenv를 이용할 수 있다. 이에 대한 내용은 아래 정리해둔 url에서 확인가능하다.  
-[1-국내 블로그: virtualenv설정을 위한 3가지 방식을 설명](https://dobest.io/how-to-set-python-dev-env/)
-[2-해외 블로그: virtualenv설정 방식, 환경변수 추가 등등](http://python-guide-pt-br.readthedocs.io/en/latest/dev/virtualenvs/)
+[1-국내 블로그: virtualenv설정을 위한 3가지 방식을 설명](https://dobest.io/how-to-set-python-dev-env/)  
+[2-해외 블로그: virtualenv설정 방식, 환경변수 추가 등등](http://python-guide-pt-br.readthedocs.io/en/latest/dev/virtualenvs/)  
 
 2017년 4월 10일 월요일 현재, 어떤 방식이 더 좋은 방식인지 모른다... 내일 쉬는시간 중간 중간마다 짬짬이 읽어본후 정리해봐야 할 듯하다.  
 
@@ -34,7 +75,4 @@ django를 설치하기 전에 virtualenv를 통해 가상환경 설정을 진행
 $ python3 -m venv env_planner
 // python2.7.x 에서...
 
-
 ## 5) django설치
-
-
