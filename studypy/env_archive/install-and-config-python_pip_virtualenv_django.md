@@ -44,6 +44,8 @@ $ pyenv --version
 ##### 존재하지 않는다면...
 $ sudo chown -R $(whoami):admin /usr/local  
 참고자료 : [Elcapitan 보안 강화때문에 brew update안되는 현상해결법](http://hssuh.tistory.com/469)  
+참고자료2 : [Elcapitan 보안강화 관련 brew update 안되는 현상 - 원상복구법은 없다 ㅋㅋㅋ](http://bluesid.tistory.com/213)  
+참고자료3 : [Homebrew 설치 및 Sierra 관련 이슈 정리](https://xho95.github.io/macos/sierra/package/homebrew/issues/2017/01/13/Using-Homebrew-and-some-Issues.html)  
 $ brew update  
 $ brew install pyenv  
 
@@ -156,25 +158,33 @@ autoenv의 오픈소스 리포지터리는 [github>kennethreitz>autoenv](https:/
 $ brew install autoenv  
 \# 매 세션마다 autoenv를 자동으로 실행할 수 있도록 설정
 \# bash를 사용할 경우 ~/.bashrc 또는 ~/.bash_profile에 >>을 통한 리다이렉션으로 저장할 것 (맨 마지막에 적혀있는 ~/.zshrc를 ~/.bashrc또는 ~/.bash_profile로 지정해 명령내릴 것)  
+  
 $ echo 'source /usr/local/opt/autoenv/activate.sh' >> ~/.zshrc  
+$ source ~/.zshrc  
+
 ### autoenv 사용하기  
+.env파일을 생성해서 그 안에 bash쉘 또는 zsh의 명령을 기록해놓으면 activate.sh가 자동으로 그 명령을 수행해준다. 자세한 내용은 예를 들어서 정리해보고자 한다.  
+$ mkdir test-autoenv  
+$ cd test-autoenv  
+$ echo 'echo "Hello, this is test-autoenv/.env file. Nice to meet you!!!"' > .env  
+$ cd ..  
+$ cd test-autoenv  
+Hello, this is test-autoenv/.env file. Nice to meet you!!!  
 
-
+### autoenv의 실제 사용예
+$ cd test-autoenv  
+$ vim .env 
+echo ""  
+echo "Python Virtual Env , pyenv : test-env-2.7.10"  
+echo ""  
+  
+pyenv shell test-env-2.7.10  
+pyenv activate  
+$ cd ..
+$ cd test-autoenv
+특정 디렉터리에 진입할때마다 수행하도록 하는 방식이다.  
 
 ## 8) 설정해놓은 가상개발환경 위에 django 설치
   
   
-  
-  
 ======
-
-
-
-## 4) virtualenv로 가상환경 설정
-[참고자료 - pystagram만들기 강좌](http://blog.hannal.com/2014/8/start_with_django_webframework_02/)
-django를 설치하기 전에 virtualenv를 통해 가상환경 설정을 진행후에 하도록 한다. 실습 프로젝트용 가상환경을 생성하여 그 환경내에서 django를 운영하도록 하기 위해서다. virtualenv로 하나의 프로젝트용 가상환경을 만들기 위해서는 아래와 같이 명령어를 입력하면 된다.  
-// python3 에서...
-$ python3 -m venv env_planner
-// python2.7.x 에서...
-
-## 5) django설치
