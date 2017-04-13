@@ -81,7 +81,7 @@ $ brew upgrade bash
 ([참고자료](https://github.com/Homebrew/homebrew-core/issues/5799))
   
 
-### pyenv에 python환경 설치
+## 4) pyenv에 python환경 설치
 $ pyenv version  
 만약 버전명과 같은것이 안뜨고 System 어쩌구가 뜬다면 사용하려는 버전의 python을 시스템이 아닌 pyenv에 설치해야한다.  
 $ pyenv install --list  
@@ -118,7 +118,7 @@ $ exec "$SHELL"
   
 설정해놓은 개발환경들은 $pyenv versions로 확인할 수도 있고, $ ls ~/.pyenv/versions 명령을 통해 확인가능하다.  
 
-### 버전 명시 문서 작성
+## 6) pip 의존성 패키지 버전 명시 문서 작성
 딱히 제목으로 지정할 만한 단어가 떠오르지 않아 제목을 버전명시 문서작성이라고 썼다. 버전명시 문서라고 해서 거창한것을 의미하는 것이 아니다. 스프링의 pom.xml,maven Node.js의 package.json,npm 등을 이용해 버전이 명시된 pom.xml, package.json이 존재해야 팀 프로젝트시 팀원들과 사용하고 있는 팀 프로젝트가 동일한 환경, 동일한 버전, 동일한 라이브러리,모듈 속에서 패키지가 관리되어 의존성 문제가 발생하지 않는다.  
 레일즈에서는 프로젝트별로 Gemfile이라는 파일이 있어서 라이브러리, 모듈을 관리하고 있다고 한다...  
   
@@ -144,7 +144,7 @@ $ pip list --format=legacy
 [list]  
 format=columns  
 
-## 6) autoenv 설치
+## 7) autoenv 설치
 ### autoenv는...
 autoenv를 설치하는 이유는 새로운 세션의 터미널을 열때마다, 디렉터리를 이동해 디렉터리가 변경될 때마다 디렉터리마다 디렉터리 내에 존재하는 .env라는 hidden 파일을 자동으로 찾아서 그 프로젝트 디렉터리의 환경에 맞게끔 개발할 수 있도록 하는 편리한 도구이기 때문이다.  
 
@@ -161,7 +161,7 @@ $ echo 'source /usr/local/opt/autoenv/activate.sh' >> ~/.zshrc
 
 
 
-## 7) 설정해놓은 가상개발환경 위에 django 설치
+## 8) 설정해놓은 가상개발환경 위에 django 설치
   
   
   
