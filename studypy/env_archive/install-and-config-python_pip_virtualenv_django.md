@@ -185,6 +185,27 @@ $ cd test-autoenv
 특정 디렉터리에 진입할때마다 수행하도록 하는 방식이다.  
 
 ## 8) 설정해놓은 가상개발환경 위에 django 설치
+$ pyenv install -list | grep 2.7.11  
+$ pyenv install 2.7.11  
+$ pyenv virtualenv 2.7.11 pysta-2.7.11  
+$ pyenv shell pysta-2.7.11  
+$ pyenv activate  
+$ mkdir pysta && cd pysta  
+$ touch .env  
+$ vim .env  
+echo "------------------------------------------------"  
+echo "| Python Virtual Env , pyenv : test-env-2.7.10 |"  
+echo "------------------------------------------------"  
+  
+pyenv shell pysta-2.7.11  
+pyenv activate  
+  
+  
+$ pip install django  
+\# django를 pysta-2.7.11이라는 가상환경에 설치하는 명령  
+
+## 9) jupyter notebook설치
+  
   
   
 ======
