@@ -1,0 +1,13 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
+# django의 db패키지 내에 있는 models 모듈을 import
+from django.db import models
+
+# Create your models here.
+class Photo(models.Model):
+    id = 'Identification for Photo'
+    image = 'Original picture file'
+    filtered_image = 'Filtered picture file'
+    content = 'Description'
+    created_at = 'The date, created'
