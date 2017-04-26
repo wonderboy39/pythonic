@@ -6,6 +6,9 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Photo
 from django.shortcuts import get_object_or_404
+# from photos.forms import create
+from .forms import PhotoForm
+from django.shortcuts import redirect
 
 # Create your views here.
 # 추가로직 - jayden
@@ -25,3 +28,16 @@ def detail(request,pk):
 #    return HttpResponse(msg)
     return HttpResponse('\n'.join(messages))
 
+def create(request):
+    form = PhotoForm()
+    if request.method == "GET":
+        form = PhotoForm()
+    elif request.method == "POST":
+        form = PhotoForm(request.POST, request.FILES)
+        if form.is_valid():
+            obj = form.save()
+            return redirect(obj)
+    ctx = {
+        'form': form,
+    }
+    return render(request, 'edit.html', ctx)
