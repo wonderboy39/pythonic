@@ -15,7 +15,7 @@
    (mybatis의 경우 직접 SQL을 작성, but django Model을 사용할 경우 api에 의존)
    \- 일반적으로 ORM의 기능이 포함되어 있는 상속받을 부모 클래스인 Model클래스에는 DB의 테이블에서 데이터를 얻어오는 메서드가 이미 api로 구현되어 있다. (해당 내용들은 대부분 api documentation을 참고해서 구현한다.)
    
-* ** Template ( django ) : MVC의 View개념 **  
+* **Template ( django ) : MVC의 View개념**  
     \- HTML페이지, Front-end라고도 부른다.  
     \- jsp의 경우 익스프레션 언어를 이용해 화면에 동적인 출력을 수행한다.  
     \- django의 경우 별도의 Template엔진을 사용한다.  
