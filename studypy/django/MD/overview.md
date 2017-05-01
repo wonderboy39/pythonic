@@ -36,7 +36,7 @@
 > 동적 페이지로 작성하지 않을 경우 DB의 게시글 수, 게시글 내용을 HTML태그로 일일이 작성해야 한다. 이와 같은 방식을 **정적 페이지 방식**이라고 한다.
 
 
-### Controller == View  
+### View ( django ) : MVC의 Controller개념
    \- Controller에서는 Model클래스의 메서드를 이용해 데이터를 얻어온 후 얻어온 데이터를 Template에 넘겨준다. 
    
 
