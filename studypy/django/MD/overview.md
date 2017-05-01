@@ -15,10 +15,10 @@
    (mybatis의 경우 직접 SQL을 작성, but django Model을 사용할 경우 api에 의존)
    \- 일반적으로 ORM의 기능이 포함되어 있는 상속받을 부모 클래스인 Model클래스에는 DB의 테이블에서 데이터를 얻어오는 메서드가 이미 api로 구현되어 있다. (해당 내용들은 대부분 api documentation을 참고해서 구현한다.)
    
-* __ Template ( django ) : MVC의 View개념 __
-   \- HTML페이지, Front-end라고도 부른다.
-   \- jsp의 경우 익스프레션 언어를 이용해 화면에 동적인 출력을 수행한다.
-   \- django의 경우 별도의 Template엔진을 사용한다.
+* Template ( django ) : MVC의 View개념  
+    \- HTML페이지, Front-end라고도 부른다.
+    \- jsp의 경우 익스프레션 언어를 이용해 화면에 동적인 출력을 수행한다.
+    \- django의 경우 별도의 Template엔진을 사용한다.
    \- 예) DB에 저장된 게시글의 수 만큼의 HTML의 p태그를 만든후 그 안에 게시글의 내용을 입력하고자 할 경우이다. 이와 같은 방식을 동적 페이지 작성이라고 한다.
    \- 보통 Template는 html페이지를 Template엔진이 해석할수 있는 Template언어로 구현된 것을 통칭한다.
 
