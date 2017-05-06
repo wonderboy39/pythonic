@@ -344,13 +344,13 @@ URLConf를 수정하기 위해 urls.py의 url함수를 수정할때 자주 사�
 
 **basic_prj/urls.py수정**  
 ```python
-$ vim basic_prj/urls.py
-from django.conf.urls import url
+from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
-    url(r'^sample_app/', include('smaple_app.urls', namespace="sample_app")),
     url(r'^admin/', admin.site.urls),
+    url(r'^sample_app/', include('sample_app.urls', namespace='sample_app')),
+    #url(r'^sample_app/', include("smaple_app.urls", namespace="sample_app")),
 ]
 ```
 **sample_app/urls.py수정**  
@@ -388,19 +388,62 @@ def index(request):
 ```
 
 #### 6.2.2) HTML(템플릿 언어 이용) 파일 작성
+#### 주의점 ) 템플릿 언어 사용시 templates디렉터리를 따로 생성해야 한다.
+한가지 주의해야 할 점은 어플리케이션 디렉터리 내에 html파일내부에서 템플릿언어를 사용할 경우 '[어플리케이션 디렉터리 명]/templates/[어플리케이션 디렉터리 명]/xxxx.html과 같은 경로에 html파일을 위치시켜야 한다. 순서를 간단히 요약해보면 아래와 같다.  
+1. 어플리케이션 디렉터리 내에 templates라는 디렉터리를 생성한다.
+2. 생성한 templates디렉터리 내부에 '어플리케이션 명' 디렉터리를 생성한다.
+3. 최종적으로 생성된 디렉터리 내부에 html을 위치시킨다.
+  
 **index.html**
+**$ mkdir sample_app/templates**
+**$ mkdir sample_app/templates/sample_app/**
+**$ vim sample_app/templates/sample_app/index.html**
 ```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>
-        Welcome, YOUTUBE urls scrapping
+    Welcome, YOUTUBE urls scrapping
     </title>
 </head>
 <body>
-    <a href="#">+Add URL</a>
-    <a href="#">Show list</a>
+    <ul>
+        <li><a href="/sample_app/write/">+Add URL</a></li>
+        <li><a href="/sample_app/list/">Show list</a></li>
+    </ul>
 </body>
 </html>
 ```
+**write.html**
+**$ vim sample_app/templates/sample_app/write.html**
+> 주의해야 할 점은 POST방식의 form을 사용하는 템플릿 코드에서는 CSRF(Cross Site Request Forgery 공격)을 방지하기 위해 {% csrf_token %}을 사용해야 한다. 폼 데이터에는 악의적인 스크립트 문장이 들어있을 수도 있기 때문이다.  
+> 위치는 `<form>`앨리먼트의 첫 줄 다음에 넣어주면 된다. 이 태그를 사용하면 장고는 내부적으로 CSRF토큰 값의 유효성을 검증한다. 만일 CSRF토큰값 검증에 실패하면 사용자에게 403에러를 보여준다. 한 가지 주의할 점은 CSRF토큰 값이 유출될 수 있으므로 외부 URL로 보내는 `<form>` 에는 사용하지 않도록 한다.
+> ex)  
+> ```html
+> <form action="." method="post">{% csrf_token %}
+> ```
+  
+
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+    Welcome, YOUTUBE urls scrapping
+    </title>
+</head>
+<body>
+  <form action="{% url 'sample_app:write_ok'%}" method="post">{% csrf_token %}
+    <input type="text" name="subject"/>
+    <input type="text" name="url"/>
+    <input type="submit" name="저장" />
+  </form>
+</body>
+</html>
+```
+**write_ok.html**
+**$ vim sample_app/templates/sample_app/write_ok.html**
+
