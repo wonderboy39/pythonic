@@ -310,7 +310,7 @@ Running migrations:
  
 위와 같이 view의 함수의 동작과 url을 매핑해놓은 것을 URLConf라고 부른다.  
 #### 6.1.2) URLConf 수정/구현
-**INDEX**
+**INDEX**  
 > URLConf를 수정하는 일반적인 방식
 > 정규표현식
 > urls.py 수정
@@ -322,7 +322,7 @@ URLConf를 수정할 때 보통 urls.py의 urlpatterns 라는 리스트에 해�
 
 1) 의 방식은 프로젝트를 처음 생성할때 디폴트로 생성된 디렉터리 내의 urls.py내에서 urlpatterns 자료구조 내에 들어가는 내용을 수정하는 것이다.  
 2) 의 방식은 디폴트 어플리케이션 디렉터리(base_prj)내의 urls.py의 urlpatterns내부에 해당 어플리케이션에 대한 namespace를 추가해준 후, 새로 추가한 어플리케이션(sample_app)에 대한 URL접근매핑을 urls.py의 urlpatterns에 Namespace와 함께 추가해주는 방식이다.  
-**여기서는 2)의 방식을 사용하여 구현하고자 한다.**
+**여기서는 2)의 방식을 사용하여 구현하고자 한다.**  
 
 #### 정규표현식
 URLConf를 수정하기 위해 urls.py의 url함수를 수정할때 자주 사용되는 정규표현식은 아래와 같다.  
@@ -354,7 +354,7 @@ urlpatterns = [
 ]
 ```
 **sample_app/urls.py수정**  
- \- sample_app디렉터리에는 urls.py가 존재하지 않는다. 따라서 urls.py를 생성해서 basic_prj/urls.py에 작성했던 내용을 복사해 붙여넣기 한 후에 아래와 같이 수정한다.
+ \- sample_app디렉터리에는 urls.py가 존재하지 않는다. 따라서 urls.py를 생성해서 basic_prj/urls.py에 작성했던 내용을 복사해 붙여넣기 한 후에 아래와 같이 수정한다.  
 
 ```python
 $ vim sample_app/urls.py
@@ -394,10 +394,10 @@ def index(request):
 2. 생성한 templates디렉터리 내부에 '어플리케이션 명' 디렉터리를 생성한다.
 3. 최종적으로 생성된 디렉터리 내부에 html을 위치시킨다.
   
-**index.html**
-**$ mkdir sample_app/templates**
-**$ mkdir sample_app/templates/sample_app/**
-**$ vim sample_app/templates/sample_app/index.html**
+**index.html**  
+**$ mkdir sample_app/templates**  
+**$ mkdir sample_app/templates/sample_app/**  
+**$ vim sample_app/templates/sample_app/index.html**  
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -415,9 +415,10 @@ def index(request):
 </body>
 </html>
 ```
-**write.html**
-**$ vim sample_app/templates/sample_app/write.html**
-> 주의해야 할 점은 POST방식의 form을 사용하는 템플릿 코드에서는 CSRF(Cross Site Request Forgery 공격)을 방지하기 위해 {% csrf_token %}을 사용해야 한다. 폼 데이터에는 악의적인 스크립트 문장이 들어있을 수도 있기 때문이다.  
+**write.html**  
+**$ vim sample_app/templates/sample_app/write.html**  
+> 주의!!) **csrf_token**   
+> 주의해야 할 점은 POST방식의 form을 사용하는 템플릿 코드에서는 **CSRF(Cross Site Request Forgery 공격)** 을 방지하기 위해 **{% csrf_token %}**을 사용해야 한다. 폼 데이터에는 악의적인 스크립트 문장이 들어있을 수도 있기 때문이다.  
 > 위치는 `<form>`앨리먼트의 첫 줄 다음에 넣어주면 된다. 이 태그를 사용하면 장고는 내부적으로 CSRF토큰 값의 유효성을 검증한다. 만일 CSRF토큰값 검증에 실패하면 사용자에게 403에러를 보여준다. 한 가지 주의할 점은 CSRF토큰 값이 유출될 수 있으므로 외부 URL로 보내는 `<form>` 에는 사용하지 않도록 한다.
 > ex)  
 > ```html
