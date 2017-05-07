@@ -13,4 +13,6 @@ def write(request):
     return render(request, 'sample_app/write.html',{'test':'test'} )
 
 def write_ok(request):
+    print("subject :: " + request.POST['subject'])
+    print("url :: " + request.POST['url'])
     return render(request, 'sample_app/write_ok.html',{'test':'test'})
