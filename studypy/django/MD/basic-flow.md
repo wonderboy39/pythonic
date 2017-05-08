@@ -200,12 +200,13 @@ TIME_ZONE = 'Asia/Seoul'
  | category | varchar(20)    | category   | models.ForeignKey(VideoCategory) |
  | subject | varchar(50)    | subject   | models.CharField(max_length=50) |
  | url | varchar(100)    | url   | models.CharField(max_length=100)  |
+ | description | varchar(400)    | url   | models.CharField(max_length=400)  |
  | pub_date | datetime    | pub_date   | models.DateTimeField('date  published') |  
  
 *pub_date항목은 추후 기능 추가를 통해 추가하고자 한다. 이 글을 쓰는 목적자체가 정말 단순무식한 골격의 프로젝트 작성절차를 정리하는 것이 목적이기 때문에 해당 내용은 basic-flow3.md에 정리할 예정이다.*
-> **PK** : 클래스에 지정해주지 않아도 장고는 항상 PK에 대한 속성을 Not Null 및 Auto Increment로 지정해준다. 변수의 이름은 테이블명의 소문자를 접두어로 해서 자동으로 만들어준다.
-> **DateTimeField** : date_published는 pub_date컬럼에 대한 레이블 문구다.
-> **FK(Foreign)** : 하나의 테이블과 다른 테이블을 연결하기 위한 키다. VideoCategory클래스의 id와 VideoUrl클래스를 연결하기 위해 지정했다. VideoCategory의 videocategory_id를 VideoUrl클래스에서 직접 설정할 필요까지는 없다. VideoCategory클래스를 VideoUrl클래스의 외래키 변수에 ForeignKey메서드에 직접 지정해주면 된다.
+> **PK** : 클래스에 지정해주지 않아도 장고는 항상 PK에 대한 속성을 Not Null 및 Auto Increment로 지정해준다. 변수의 이름은 테이블명의 소문자를 접두어로 해서 자동으로 만들어준다.  
+> **DateTimeField** : date_published는 pub_date컬럼에 대한 레이블 문구다.  
+> **FK(Foreign)** : 하나의 테이블과 다른 테이블을 연결하기 위한 키다. VideoCategory클래스의 id와 VideoUrl클래스를 연결하기 위해 지정했다. VideoCategory의 videocategory_id를 VideoUrl클래스에서 직접 설정할 필요까지는 없다. VideoCategory클래스를 VideoUrl클래스의 외래키 변수에 ForeignKey메서드에 직접 지정해주면 된다.  
 
 #### 4.3) sample_app/models.py에 모델 코딩
 models.py는 보통 어플리케이션 단위로 수정한다. 해당 어플리케이션에서 독립적으로 수행되어야하는 이유 때문일 것이다.
@@ -445,6 +446,27 @@ def index(request):
 </body>
 </html>
 ```
-**write_ok.html**
-**$ vim sample_app/templates/sample_app/write_ok.html**
+**write_ok함수 **  
+**$ vim sample_app/views.py**  
+```python
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
+from django.shortcuts import render
+from sample_app.models import VideoUrl, VideoCategory
+
+# Create your views here.
+def index(request):
+    context = {'videourls' : 'helloworld'}
+    return render(request, 'sample_app/index.html', context)
+
+def write(request):
+    return render(request, 'sample_app/write.html',{'test':'test'} )
+
+def write_ok(request):
+    print("subject :: " + request.POST['subject'])
+    print("url :: " + request.POST['url'])
+    return render(request, 'sample_app/write_ok.html',{'test':'test'})
+```
+
 
