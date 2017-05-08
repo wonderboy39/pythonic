@@ -230,9 +230,10 @@ class VideoUrl(models.Model):
     category = models.ForeignKey(VideoCategory)
     subject = models.CharField(max_length=50)
     url = models.CharField(max_length=100)
+    description = models.CharField(max_length=400)
     #pub_date = models.DateTimeField('date published') # 추후 다시 추가
     def __unicode__(self):
-        return self.subjectt
+        return self.subject
 ```
 *VideoCategory의 기본키를 VideoUrl이 참고하도록 설계했으므로 VideoCategory 클래스가 먼저 기술되어야 한다. python은 스크립트언어이므로 한 라인씩 차례로 읽는다. 따라서 VideoCategory클래스를 VideoUrl클래스 뒤에 기술할 경우 파이썬 인터프리터는 VideoUrl클래스가 참조할 VideoCategory가 없는 것으로 생각한다.( VideoCategory가 정의되기 전에 VideoUrl클래스를 정의하게 되므로)*
 ### 5) 테이블 반영, Database변경사항 반영
@@ -446,7 +447,7 @@ def index(request):
 </body>
 </html>
 ```
-**write_ok함수 **  
+**write_ok함수**  
 **$ vim sample_app/views.py**  
 ```python
 # -*- coding: utf-8 -*-
@@ -466,7 +467,6 @@ def write(request):
 def write_ok(request):
     print("subject :: " + request.POST['subject'])
     print("url :: " + request.POST['url'])
+    print("description :: " + request.POST['description'])
     return render(request, 'sample_app/write_ok.html',{'test':'test'})
 ```
-
-
