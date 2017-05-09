@@ -11,7 +11,7 @@ class VideoCategory(models.Model):
         return self.category
 
 class VideoUrl(models.Model):
-    category = models.ForeignKey(VideoCategory)
+    #category = models.ForeignKey(VideoCategory)
     subject = models.CharField(max_length=50)
     url = models.CharField(max_length=100)
     description = models.CharField(max_length=400)
