@@ -2,6 +2,8 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 from sample_app.models import VideoUrl, VideoCategory
 
 # Create your views here.
@@ -24,8 +26,8 @@ def write_ok(request):
     v = VideoUrl( subject=m_subject, url=m_url, description=m_description )
     #v.save(force_insert=True)
     v.save()
-    return render(request, 'sample_app/show_vlist.html',{'test':'test'})
-    #return HttpResponseRedirect(reverse('sample_app:show_vlist'))
+    #return render(request, 'sample_app/show_vlist.html',{'test':'test'})
+    return HttpResponseRedirect(reverse('sample_app:show_vlist'),{'test':'test'})
     #return redirect('sample_app/show_vlist/')
     #return HttpResponseRedirect('sample_app:show_vlist')
 
