@@ -1,0 +1,13 @@
+<html>
+ <head>
+   <title>show list of videos</title>
+ </head>
+ <body>
+   <h1> list of video urls  </h1>
+   <ul>
+     {% for vod in video_list %}
+       <li><a href="{{ vod.url }}"> {{vod.subject}} </a> </li>
+     {% endfor %}
+   </ul>
+ </body>
+</html>

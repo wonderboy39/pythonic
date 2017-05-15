@@ -34,7 +34,10 @@ def write_ok(request):
 #def list(request):
 def show_vlist(request):
     print("view.py - list()")
-    video_list = VideoUrl.objects.all().order_by('videourl_id')
+    video_list = VideoUrl.objects.all()
+    #vidoe_list = get_object_or_404(VideoUrl, pk=videourl_id)
+    for vod in video_list:
+        print('vod : ' + vod.subject)
     msg = { 'video_list' : video_list }
     #아래의 부분은 응? 어뜨케 고치지? ㅋㅋㅋ
     return render ( request, 'sample_app/show_vlist.html', msg )
