@@ -38,7 +38,11 @@ def show_vlist(request):
     #vidoe_list = get_object_or_404(VideoUrl, pk=videourl_id)
     for vod in video_list:
         print('vod : ' + vod.subject)
+
     msg = { 'video_list' : video_list }
     #아래의 부분은 응? 어뜨케 고치지? ㅋㅋㅋ
     return render ( request, 'sample_app/show_vlist.html', msg )
 
+def modify(request):
+    msg = { 'temp' : 'temp'}
+    return render( request, 'sample_app/modify.html', msg )
