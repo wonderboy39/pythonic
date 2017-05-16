@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+      VIDEO LIST
+    </title>
+</head>
+<body>
+  <form action="{% url 'sample_app:write_ok'%}" method="post">{% csrf_token %}
+  <table>
+    <tr>
+      <td><p>title : </p></td>
+      <td><input type="text" name="subject"/></td>
+    </tr>
+    <tr>
+      <td><p>url : </p></td>
+      <td><input type="text" name="url"/></td>
+    </tr>
+    <tr>
+      <td><p>description : </p></td>
+      <td><input type="text" name="description"/></td>
+    </tr>
+    <tr>
+      <td><input type="hidden" name="category" value="Videos"/></td>
+      <td colspan="2"><input type="submit" name="저장" /></td>
+    </tr>
+  </table>
+  </form>
+</body>
+</html>
