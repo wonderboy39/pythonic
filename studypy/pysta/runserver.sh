@@ -1,1 +1,0 @@
-pystagram/manage.py runserver
