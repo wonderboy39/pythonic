@@ -13,8 +13,20 @@
        {% for vod in video_list %}
            <tr>
                 <td><a href="{{ vod.url }}"> {{ vod.subject }}</a></td>
-                <td><a href="sample_app:edit"> Edit </a></td>
+                <td>
+                    <form action="{% url 'sample_app:modify' %}" method="get">
+                        {% csrf_token %}
+{#                        <a href="{% url 'sample_app:modify' %}">#}
+                        <input type="hidden" name="vod_id" value="{{ vod.vod_id }}"/>
+                        <input type="submit" value="Edit"/>
+{#                        </a>#}
+                    </form>
+                </td>
+{#           "{% url 'sample_app:write_ok'%}"#}
            </tr>
+{#           <tr>#}
+{#                <td colspan="2">{{ vod. }}</td>#}
+{#           </tr>#}
        {% endfor %}
    </table>
  </body>

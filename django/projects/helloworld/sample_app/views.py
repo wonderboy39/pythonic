@@ -5,6 +5,8 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from sample_app.models import VideoUrl, VideoCategory
+from .VideoForm import VideoForm
+from django.shortcuts import render, redirect
 
 # Create your views here.
 def index(request):
@@ -40,9 +42,26 @@ def show_vlist(request):
         print('vod : ' + vod.subject)
 
     msg = { 'video_list' : video_list }
-    #아래의 부분은 응? 어뜨케 고치지? ㅋㅋㅋ
     return render ( request, 'sample_app/show_vlist.html', msg )
 
 def modify(request):
-    msg = { 'temp' : 'temp'}
-    return render( request, 'sample_app/modify.html', msg )
+    if request.method == 'GET':
+        print("<===== modify (GET) ====>")
+        vodid = request.GET['vod_id']
+        print("vod_id :: " + vodid)
+        vod = VideoUrl.objects.get(vod_id=vodid)
+        print("vod_id(from sql) :: " + vod.subject)
+        return render(request, 'sample_app/modify.html', {'vod':vod})
+    elif request.method == 'POST':
+        print("<===== modify (POST) =====>")
+
+
+def modify_ok(request):
+    if request.method=='POST':
+        form = VideoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return render(request, 'sample_app/show_vlist.html', {'form' : form })
+    return render(request, 'sample_app/show_vlist.html')
+
+
