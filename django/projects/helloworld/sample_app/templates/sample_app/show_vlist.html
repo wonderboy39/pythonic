@@ -14,7 +14,8 @@
            <tr>
                 <td><a href="{{ vod.url }}"> {{ vod.subject }}</a></td>
                 <td>
-                    <form action="{% url 'sample_app:modify' %}" method="get">
+{#                    <form action="{% url 'sample_app:modify' %}" method="get">#}
+                    <form action="{% url 'sample_app:modify' %}" method="post">
                         {% csrf_token %}
 {#                        <a href="{% url 'sample_app:modify' %}">#}
                         <input type="hidden" name="vod_id" value="{{ vod.vod_id }}"/>

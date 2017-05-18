@@ -9,6 +9,8 @@
 <h1> --- EDIT SINGLE PAGE --- </h1>
 <form action="{% url 'sample_app:modify_ok' %}" method="post">
     {% csrf_token %}
+    {{ form }}
+{#    form 객체값을 어떤방식으로 html로 받아오는지 알아볼 것 #}
     <table>
         <tr>
             <td><p>제목 : </p></td>
@@ -27,8 +29,8 @@
             <td><input type="submit" value="Save"/></td>
         </tr>
     </table>
-{#    <input type="submit" value="Save">#}
-{#    <input type="text" name="subject" value="{{vod.subject}}"/>#}
+    <input type="submit" value="Save">
+    <input type="text" name="subject" value="{{vod.subject}}"/>
 </form>
 {#    <form method="POST">#}
 {#        <button type="submit"> 저장 </button>#}

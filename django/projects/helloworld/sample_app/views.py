@@ -35,25 +35,25 @@ def write_ok(request):
 
 #def list(request):
 def show_vlist(request):
-    print("view.py - list()")
     video_list = VideoUrl.objects.all()
     #vidoe_list = get_object_or_404(VideoUrl, pk=videourl_id)
     for vod in video_list:
         print('vod : ' + vod.subject)
-
     msg = { 'video_list' : video_list }
     return render ( request, 'sample_app/show_vlist.html', msg )
 
 def modify(request):
     if request.method == 'GET':
-        print("<===== modify (GET) ====>")
-        vodid = request.GET['vod_id']
-        print("vod_id :: " + vodid)
-        vod = VideoUrl.objects.get(vod_id=vodid)
-        print("vod_id(from sql) :: " + vod.subject)
+        vod = VideoUrl.objects.get(vod_id=request.GET['vod_id'])
         return render(request, 'sample_app/modify.html', {'vod':vod})
     elif request.method == 'POST':
-        print("<===== modify (POST) =====>")
+        # 1) Form 클래스로 구현
+        # modify 페이지 자체를 Form클래스로 구현할때의 페이지 구성
+        form = VideoForm()
+        ctx = {
+            'form': form
+        }
+        return render(request, 'sample_app/modify.html',ctx)
 
 
 def modify_ok(request):
@@ -63,5 +63,3 @@ def modify_ok(request):
             form.save()
             return render(request, 'sample_app/show_vlist.html', {'form' : form })
     return render(request, 'sample_app/show_vlist.html')
-
-
