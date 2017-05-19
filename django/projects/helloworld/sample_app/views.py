@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect
 from sample_app.models import VideoUrl, VideoCategory
 from .VideoForm import VideoForm
 from django.shortcuts import render, redirect
+from pprint import pprint
 
 # Create your views here.
 def index(request):
@@ -37,8 +38,10 @@ def write_ok(request):
 def show_vlist(request):
     video_list = VideoUrl.objects.all()
     #vidoe_list = get_object_or_404(VideoUrl, pk=videourl_id)
+    #just value test.
     for vod in video_list:
         print('vod : ' + vod.subject)
+
     msg = { 'video_list' : video_list }
     return render ( request, 'sample_app/show_vlist.html', msg )
 
@@ -47,14 +50,21 @@ def modify(request):
         vod = VideoUrl.objects.get(vod_id=request.GET['vod_id'])
         return render(request, 'sample_app/modify.html', {'vod':vod})
     elif request.method == 'POST':
+        # 참고 URL : https://docs.djangoproject.com/en/1.11/topics/forms/modelforms/#the-save-method
         # 1) Form 클래스로 구현
-        # modify 페이지 자체를 Form클래스로 구현할때의 페이지 구성
-        form = VideoForm()
+        # modify 페이지 자체를 Form클래스로 구현할때의 페이지 구성, POST방식
+
+        # vod_id에 대한 하나의 데이터(로우) 얻어오기
+        vod = VideoUrl.objects.get(vod_id=request.POST['vod_id'])
+
+        # 하나의 로우는 model instance라고 하는가보다. instance 값으로 model 데이터를 넘겨준다.
+        form = VideoForm(instance=vod)
         ctx = {
             'form': form
         }
-        return render(request, 'sample_app/modify.html',ctx)
 
+        # form데이터를 실어서 modify.html로 전송
+        return render(request, 'sample_app/modify.html',ctx)
 
 def modify_ok(request):
     if request.method=='POST':
