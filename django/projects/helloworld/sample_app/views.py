@@ -68,8 +68,13 @@ def modify(request):
 
 def modify_ok(request):
     if request.method=='POST':
+        # 단순 저장이 아닌 update구문으로 변경할 것
+        # 원인) 단순 저장할 경우 복사본 데이터가 생성된다.
+        # 방법) Model instance를 얻어온 후 해당 값들을 업데이트 해주는 수밖에.
         form = VideoForm(request.POST)
         if form.is_valid():
-            form.save()
+            vod = VideoUrl.objects.get(pk=request.POST['vod_id'])
+            # vod.objects.update(force_update=True)
+            # VideoUrl.objects.update(force_update=True)
             return render(request, 'sample_app/show_vlist.html', {'form' : form })
     return render(request, 'sample_app/show_vlist.html')
