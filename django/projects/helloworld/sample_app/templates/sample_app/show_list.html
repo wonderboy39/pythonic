@@ -1,0 +1,23 @@
+<html>
+ <head>
+   <title>show list of videos</title>
+ </head>
+ <body>
+   <h1> list of video urls  </h1>
+   <table>
+       {% for vod in video_list %}
+           <tr>
+                <td><a href="{{ vod.url }}"> {{ vod.subject }}</a></td>
+                <td>
+                    <a href="{% url 'sample_app:update' vod.vod_id %}"> Edit </a>
+                </td>
+{#           "{% url 'sample_app:write_ok'%}"#}
+           </tr>
+{#           <tr>#}
+{#                <td colspan="2">{{ vod. }}</td>#}
+{#           </tr>#}
+       {% endfor %}
+   </table>
+ </body>
+</html>
+{# modify하는 html로 넘어가는 버튼 기능 구현, url설계, modify()함수를 views.py에 구현 #}

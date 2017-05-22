@@ -14,14 +14,15 @@
            <tr>
                 <td><a href="{{ vod.url }}"> {{ vod.subject }}</a></td>
                 <td>
-{#                    <form action="{% url 'sample_app:modify' %}" method="get">#}
-                    <form action="{% url 'sample_app:modify' %}" method="post">
-                        {% csrf_token %}
-{#                        <a href="{% url 'sample_app:modify' %}">#}
-                        <input type="hidden" name="vod_id" value="{{ vod.vod_id }}"/>
-                        <input type="submit" value="Edit"/>
-{#                        </a>#}
-                    </form>
+{#                    POST 방식  #}
+{#                    <form action="{% url 'sample_app:modify' %}" method="post">#}
+{#                        {% csrf_token %}#}
+{#                        <input type="hidden" name="vod_id" value="{{ vod.vod_id }}"/>#}
+{#                        <input type="submit" value="Edit"/>#}
+{#                    </form>#}
+{#                    GET 방식 #}
+                    <a href="{% url 'sample_app:update' vod.vod_id %}"> Edit </a>
+{#                     <a href="{% url 'sample_app:mupdate' vod.vod_id %}"> Edit </a>#}
                 </td>
 {#           "{% url 'sample_app:write_ok'%}"#}
            </tr>
@@ -31,5 +32,5 @@
        {% endfor %}
    </table>
  </body>
+ {# modify하는 html로 넘어가는 버튼 기능 구현, url설계, modify()함수를 views.py에 구현 #}
 </html>
-{# modify하는 html로 넘어가는 버튼 기능 구현, url설계, modify()함수를 views.py에 구현 #}
