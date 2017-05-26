@@ -6,7 +6,10 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect
 from sample_app.models import VideoUrl, VideoCategory
 from .VideoForm import VideoForm
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic.edit import UpdateView
+from django.views.generic import View
+from django.core.urlresolvers import reverse_lazy
 from pprint import pprint
 
 # Create your views here.
@@ -31,6 +34,7 @@ def write_ok(request):
     v.save()
     #return render(request, 'sample_app/show_vlist.html',{'test':'test'})
     return HttpResponseRedirect(reverse('sample_app:show_vlist'),{'test':'test'})
+    # return HttpResponseRedirect(reverse('sample_app:show_list'), {'test':'test'})
     #return redirect('sample_app/show_vlist/')
     #return HttpResponseRedirect('sample_app:show_vlist')
 
@@ -78,3 +82,60 @@ def modify_ok(request):
             # VideoUrl.objects.update(force_update=True)
             return render(request, 'sample_app/show_vlist.html', {'form' : form })
     return render(request, 'sample_app/show_vlist.html')
+
+# UpdateView 클래스 상속받아 사용하는 방식 ( UpdateView : Form을 자동적으로 사용하는 클래스 )
+class VideoUrlUpdateView(UpdateView):
+    # model = VideoUrl
+    # fields = ['vod_id','subject', 'url', 'description']
+    # success_url = reverse_lazy('sample_app:show_vlist')
+    form_class = VideoForm
+    template_name = 'sample_app/videourl_form.html'
+
+    def get(self, request, pk):
+        # https://tutorial.djangogirls.org/ko/django_forms/#폼-수정하기
+        vod = VideoUrl.objects.get(vod_id=pk)
+        # vod 객체를 form 객체로 변환
+        form = self.form_class(instance=vod)
+        # 직접 생성자를 사용해도 된다
+        # form = VideoForm(instance=vod)
+
+        return render(request, self.template_name, {'form' : form})
+
+    def post(self, request, pk, **kwargs):
+        # 참고자료 : http://ruaa.me/django-view/
+        # 구글 검색어 : generic view post
+        form = self.form_class(request.POST)
+
+        #1) pk값에 해당하는 vod 객체 얻어온다.
+        vod = VideoUrl.objects.get(vod_id = pk)
+
+        #2) vod객체에 POST로 전달받은 form 값을 저장한다.
+        VideoUrl.objects.filter(pk=pk).update(subject=request.POST['subject'], description=request.POST['description'],\
+                                              url = request.POST['url'])
+
+        if form.is_valid():
+            return HttpResponseRedirect(reverse('sample_app:show_vlist'), {'test': 'test'})
+        return render(request, self.template_name, {'form':form})
+
+# ModelForm 사용하는 방식
+class VideoUpdateView(View):
+    form_class = VideoForm
+    template_name = 'sample_app/videourl_form.html'
+    initial = {'key':'value'}
+    def get(self, request, pk):
+        print('vodid :: ' + pk)
+        vod = VideoUrl.objects.get(vod_id=pk)
+        print('DB >>> pk == ' + pk)
+        print('DB >>> vod.subject == ' + vod.subject)
+        # form = self.form_class()
+        # form = self.form_class(initial= self.initial)
+        return render(request, self.template_name, {'form':vod })
+
+    def post(self, request, *args):
+        form = self.form_class(request.POST)
+        # if form.is_valid():
+        #     print("POST>>>")
+        #     print("show_vlist")
+        #     print("show_vlist")
+        #     return HttpResponseRedirect('sample_app:show_vlist')
+        return render(request, self.template_name, {'form':form}) # form이 유효하지 않을때. 에러가 있을경우

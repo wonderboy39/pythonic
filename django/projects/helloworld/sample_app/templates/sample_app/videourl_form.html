@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Update Page </title>
+</head>
+<body>
+{#    <form action="{% url 'sample_app:update'%}" method="post">{% csrf_token %}#}
+    <form action="." method="post">{% csrf_token %}
+        {% if form.errors %}
+            <p class="errornote"> Wrong! Please correct the error(s) below. </p>
+        {% endif %}
+{#    <div>#}
+{#        {{ form.subject.label_tag }} {{ form.subject }}#}
+{#    </div>#}
+{#    <div>#}
+{#        {{ form.url.label_tag }} {{ form.url }}#}
+{#    </div>#}
+{#    <div>#}
+{#        {{ form.description.label_tag }} {{ form.description }}#}
+{#    </div>#}
+{#    <div>#}
+{#        <input type="submit" value="Submit">#}
+{#    </div>#}
+        {{ form.as_p }}
+        <input type="hidden" value="{{ form.vod_id }}"/>
+        <input type="submit" value="submit"/>
+    </form>
+</body>
+</html>
