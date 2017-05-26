@@ -1,30 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title> Update Page </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> Modify Content </title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
 <body>
-{#    <form action="{% url 'sample_app:update'%}" method="post">{% csrf_token %}#}
-    <form action="." method="post">{% csrf_token %}
-        {% if form.errors %}
-            <p class="errornote"> Wrong! Please correct the error(s) below. </p>
-        {% endif %}
-{#    <div>#}
-{#        {{ form.subject.label_tag }} {{ form.subject }}#}
-{#    </div>#}
-{#    <div>#}
-{#        {{ form.url.label_tag }} {{ form.url }}#}
-{#    </div>#}
-{#    <div>#}
-{#        {{ form.description.label_tag }} {{ form.description }}#}
-{#    </div>#}
-{#    <div>#}
-{#        <input type="submit" value="Submit">#}
-{#    </div>#}
-        {{ form.as_p }}
-        <input type="hidden" value="{{ form.vod_id }}"/>
-        <input type="submit" value="submit"/>
-    </form>
+    <div class="container" style="width:400px; padding:15px">
+        <h1> Edit URL Information </h1>
+    </div>
+
+    <div class="container panel panenl-default">
+        <table class="table table-bordered">
+            <thead></thead>
+            <tbody>
+                <form action="." method="post">{% csrf_token %}
+                    {% if form.errors %}
+                        <p class="errornote"> Wrong! Please correct the error(s) below. </p>
+                    {% endif %}
+                    {{ form.as_p }}
+
+                    <input type="hidden" value="{{ form.vod_id }}" class="btn btn-default"/>
+                    <input type="submit" value="submit" class="btn btn-default"/>
+                </form>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>

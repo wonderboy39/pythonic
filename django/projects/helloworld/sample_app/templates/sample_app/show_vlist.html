@@ -1,36 +1,58 @@
 <html>
  <head>
    <title>show list of videos</title>
+     <!-- 합쳐지고 최소화된 최신 CSS -->
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+     <!-- 부가적인 테마 -->
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+     <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+     <style>
+             .subject{
+                font-size: 2em;
+                text-align: center;
+            }
+            .edit{
+                float: right;
+{#                height: 20%;#}
+                vertical-align: center;
+            }
+            .empty{
+                margin:2px;
+            }
+        </style>
  </head>
  <body>
-   <h1> list of video urls  </h1>
-{#   <ul>#}
-{#     {% for vod in video_list %}#}
-{#       <li><a href="{{ vod.url }}"> {{vod.subject}} </a> </li>#}
-{#     {% endfor %}#}
-{#   </ul>#}
-   <table>
-       {% for vod in video_list %}
-           <tr>
-                <td><a href="{{ vod.url }}"> {{ vod.subject }}</a></td>
-                <td>
-{#                    POST 방식  #}
-{#                    <form action="{% url 'sample_app:modify' %}" method="post">#}
-{#                        {% csrf_token %}#}
-{#                        <input type="hidden" name="vod_id" value="{{ vod.vod_id }}"/>#}
-{#                        <input type="submit" value="Edit"/>#}
-{#                    </form>#}
-{#                    GET 방식 #}
-                    <a href="{% url 'sample_app:update' vod.vod_id %}"> Edit </a>
-{#                     <a href="{% url 'sample_app:mupdate' vod.vod_id %}"> Edit </a>#}
-                </td>
-{#           "{% url 'sample_app:write_ok'%}"#}
-           </tr>
-{#           <tr>#}
-{#                <td colspan="2">{{ vod. }}</td>#}
-{#           </tr>#}
-       {% endfor %}
-   </table>
+    <div class="container-fluid panel panenl-default" style="width:400px; padding:15px">
+        <div class="title">
+            <span class="subject"> <b>Video List</b> </span>
+            <a href="/sample_app/index/" class="btn btn-default edit" role="button" > Go Home </a>
+        </div>
+    </div>
+    <div class="empty">
+        <hr/>
+    </div>
+    <div class="container">
+        <div class="row">
+            {% for vod in video_list %}
+                <div class="col-sm-6 col-md-4 panel panel-default">
+                    <div class="thumbnail embed-responsive embed-responsive-16by9" width="330" height="220">
+<!--                    <div class="thumbnail">-->
+<!--                        <img src="..." alt="...">-->
+                        <iframe width="310" height="200" src="{{ vod.url }}" frameborder="0" class="media-object"></iframe>
+                    </div>
+                    <div class="caption">
+                        <h3> {{ vod.subject }} </h3>
+                        <p> {{ vod.description }} </p>
+                        <p>
+                            <a href="{% url 'sample_app:update' vod.vod_id %}" class="btn btn-default" role="button">Edit</a>
+                        </p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
  </body>
  {# modify하는 html로 넘어가는 버튼 기능 구현, url설계, modify()함수를 views.py에 구현 #}
 </html>
